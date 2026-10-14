@@ -1,0 +1,8 @@
+# vecchi file per la pubblicazione su claude.ai (contengono le foto della prima versione, non servono alla nebulosa)
+_pubblicazione/
+
+# file di sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+._*

@@ -1,0 +1,89 @@
+LA NEBULOSA DELLE IMMAGINI
+==========================
+
+FOTO DAL TELEFONO (codice QR, solo in locale)
+---------------------------------------------
+1. Avvia con "AVVIA INSTALLAZIONE.bat" o "AVVIA IN FINESTRA (prove).bat".
+   La prima volta Windows può chiedere se consentire l'accesso alla rete:
+   scegli "Reti private" e consenti (serve ai telefoni per mandare le foto).
+2. Il telefono deve essere collegato allo STESSO Wi-Fi del computer.
+3. Inquadra il codice QR: nell'installazione è sempre in un angolo, nella
+   nebulosa normale si apre con il pulsante QR in alto.
+4. Sul telefono si apre una pagina: "Scatta o scegli una foto" -> "Invia".
+La foto appare grande 3 secondi, poi si rimpicciolisce, vaga un po' e si unisce
+al gruppo con i colori più simili; se non somiglia a niente crea un gruppo nuovo.
+Le foto vengono salvate nella cartella "caricate" e non vanno su internet.
+Cronologia ed eliminazione: pulsante con le immagini in alto (o "cronologia"
+sotto il QR nell'installazione) -> "Elimina" -> "Sì, elimina".
+
+INSTALLAZIONE (la gente dice una parola, si apre un'immagine)
+-------------------------------------------------------------
+1. Collega microfono e casse al computer.
+2. Doppio clic su "AVVIA INSTALLAZIONE.bat".
+   Si apre una finestra nera (il piccolo server: lasciala aperta) e la nebulosa
+   a schermo intero in Chrome, oppure in Edge se Chrome non c'è.
+   Il microfono parte SPENTO: tocca il cerchio (o premi la barra spaziatrice)
+   per accenderlo, e di nuovo per spegnerlo. Mentre un'immagine è aperta il
+   microfono riposa, e riparte da solo quando la nebulosa è tornata intera.
+3. Chi si avvicina dice una parola: la nebulosa vola verso una stella, esplode
+   in un lampo di luce con una piccola melodia (diversa per ogni parola) e apre
+   un'immagine legata a quella parola. Ogni parola nuova apre un'altra immagine,
+   e la stessa parola ripetuta ne sceglie una diversa.
+   L'immagine resta aperta 5 secondi, poi rientra nella sua stella con una
+   frase musicale discendente e la telecamera si allontana fino a mostrare
+   tutta la nebulosa, che riprende a girare.
+   Se il browser blocca l'audio (cioè senza AVVIA INSTALLAZIONE.bat) compare
+   la scritta "Tocca lo schermo per accendere la nebulosa": basta un tocco all'inizio.
+
+Serve la connessione a internet: il riconoscimento vocale di Chrome/Edge lavora
+online (l'audio viene trasformato in testo dai server di Google o Microsoft).
+Se manca il microfono o internet, si può anche scrivere la parola sulla tastiera
+e premere Invio.
+
+Uscire dallo schermo intero: Alt+F4. Poi chiudi la finestra nera.
+Per provarla in una finestra normale:
+    powershell -ExecutionPolicy Bypass -File strumenti\avvia-installazione.ps1 -Finestra
+Per una parola di prova senza microfono, apri l'indirizzo con &prova=mare in fondo:
+    http://localhost:8765/index.html?installazione&prova=mare
+
+Consigli per lo spazio
+  - Disattiva lo spegnimento dello schermo e la sospensione di Windows.
+  - In un ambiente rumoroso usa un microfono direzionale vicino a chi parla.
+  - La prima volta Chrome potrebbe chiedere di consentire il microfono:
+    l'avvio automatico lo consente già, ma se compare una richiesta accettala.
+
+LE PAROLE
+---------
+parole.js contiene le parole di ogni immagine (scritte guardando le foto) e le
+"famiglie" di parole (felicità -> sorriso, gioia, festa...). È un file di testo:
+si apre con il Blocco note e si può correggere, togliere o aggiungere parole.
+Una riga per immagine o gruppo:   f0169-f0184: anziana nonna intreccio mani
+Il numero dell'immagine (f0123) si vede nella nebulosa normale aprendo una stella.
+
+NEBULOSA NORMALE (da esplorare con il mouse)
+--------------------------------------------
+Doppio clic su index.html (Chrome, Edge o Firefox). Nella barra in basso si può
+cercare anche per parola.
+
+Contenuto
+  index.html               la nebulosa (normale e installazione)
+  AVVIA INSTALLAZIONE.bat  avvia l'installazione a schermo intero
+  parole.js                le parole delle immagini, modificabile
+  dati.js                  miniature + colori + date di ogni immagine (generato)
+  medie/                   versioni a 1400 px delle foto (generate)
+  strumenti/               script per l'installazione e per rigenerare le immagini
+  nebulosa.html            copia usata per la versione online su claude.ai
+
+Aggiungere o cambiare immagini
+  Metti le foto nella cartella sorgente (default: Desktop\per cluade, anche in
+  sottocartelle: ogni sottocartella diventa una costellazione), poi esegui:
+    powershell -ExecutionPolicy Bypass -File strumenti\prepara-immagini.ps1
+  Formati letti: JPG, PNG, CR2 (Canon). Attenzione: i numeri delle immagini
+  (f0001...) seguono l'ordine dei file, quindi se aggiungi foto controlla
+  le righe di parole.js.
+
+Come si formano i legami
+  - Vicinanza nel tempo: scatti della stessa cartella fatti a meno di 6 minuti
+    di distanza (linee dorate).
+  - Affinità di colore: ogni immagine è legata alle due immagini con la
+    composizione cromatica più simile, anche tra cartelle diverse.
