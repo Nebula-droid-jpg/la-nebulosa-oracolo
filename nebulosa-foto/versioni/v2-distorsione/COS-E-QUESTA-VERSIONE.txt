@@ -1,0 +1,11 @@
+﻿VERSIONE 2 — 12 ottobre 2026
+Come la versione 1, più la DISTORSIONE:
+- la nebulosa è piegata in un vortice, con pieghe, correnti e pulsazioni che si muovono;
+- i filamenti sono curve che si piegano e vibrano;
+- le immagini sono superfici liquide: ondeggiano, ruotano su se stesse, hanno bordi irregolari
+  e i colori leggermente sdoppiati; anche l'immagine che si apre con la parola ondeggia.
+Intensità: cursore "Distorsione" in alto (0-150%), tasti [ e ], oppure nell'indirizzo
+&distorsione=0.5 (0 = forma originale, 1 = piena, 1.5 = estrema).
+
+Per tornare a questa versione: copia index.html e parole.js di questa cartella
+nella cartella principale (nebulosa-foto), sostituendo quelli che ci sono.

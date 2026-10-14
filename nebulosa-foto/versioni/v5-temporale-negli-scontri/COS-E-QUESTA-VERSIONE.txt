@@ -1,0 +1,13 @@
+﻿VERSIONE 5 — 12 ottobre 2026
+Come la versione 3 (distorsione + gruppi che si scontrano), con il TEMPORALE SOLO NEGLI SCONTRI
+(niente sole e niente arcobaleno):
+- mentre due gruppi corrono uno verso l'altro il cielo si scurisce e comincia a piovere;
+- all'impatto cade un grande fulmine proprio sul punto dello scontro, con lampo e tuono;
+- mentre si mescolano altri fulmini colpiscono le immagini dei gruppi (l'immagine colpita si
+  gonfia e manda scintille), pioggia forte e vento;
+- quando si separano il temporale si calma e il cielo torna limpido.
+Pulsante con la nuvola in alto (o tasto T): fa scontrare subito due gruppi.
+Nella nebulosa normale i suoni si sentono con "Rumore di fondo" acceso; nell'installazione sempre.
+
+Per tornare a questa versione: copia index.html e parole.js di questa cartella
+nella cartella principale (nebulosa-foto), sostituendo quelli che ci sono.

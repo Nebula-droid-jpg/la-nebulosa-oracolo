@@ -1,0 +1,9 @@
+﻿VERSIONE 10 — come la v9, più:
+- vocabolario.js: famiglie di concetti in italiano con i verbi coniugati in automatico;
+  l'Oracolo capisce anche errori di battitura e, se non riconosce nessuna parola, risponde
+  al tipo di domanda (dove -> luoghi, chi -> volti, quando, perché, come, cosa);
+- la nebulosa ascolta il rumore della stanza (microfono dell'installazione o pulsante
+  "Ascolta il rumore"): rumore forte -> scontri violenti, forte e continuo -> sempre più
+  frequenti e duri, rumore pacato -> i gruppi si sfiorano appena, silenzio -> nessuno scontro;
+- particelle fluorescenti dello stesso colore dei filamenti che si propagano lungo i
+  gruppi all'impatto e si staccano mentre si mescolano.

@@ -1,0 +1,14 @@
+﻿VERSIONE 8 — 14 ottobre 2026 — L'ORACOLO
+- Ogni foto di D:\foto\full è stata analizzata: per ognuna un gruppo tematico, una frase
+  oracolare e le parole che descrivono cosa c'è (file analisi.js, modificabile).
+- 11 gruppi per contenuto: Mani all'opera, Materia, Muri che parlano, Cieli sospesi,
+  Il nido rosso, Fuori, Volti e incontri, La bottega, Corpi di pietra, Quadri e sale,
+  Dietro le quinte.
+- I filamenti collegano solo le foto dello stesso gruppo (tutte, con un albero di legami
+  per colore e contenuto), mai gruppi diversi.
+- I nomi dei file non compaiono più: al loro posto c'è la frase oracolare.
+- Barra di ricerca = Oracolo: fai una domanda, premi Invio, la nebulosa vola verso
+  l'immagine più legata alle parole della domanda e mostra la sua frase.
+  Si chiude con un clic o con Esc (o da sola dopo circa 15 secondi).
+Per tornare a questa versione: copia index.html, parole.js e analisi.js di questa cartella
+nella cartella principale (nebulosa-foto).

@@ -1,0 +1,10 @@
+﻿VERSIONE 7 — 14 ottobre 2026
+Stessa nebulosa della versione 6, con le 492 foto di D:\foto\full al posto di quelle di
+"per cluade" (dati.js e la cartella medie sono stati rigenerati da D:\foto\full).
+Le foto non hanno data di scatto, quindi:
+- niente filamenti "vicinanza nel tempo" (sarebbero falsi), restano quelli di colore;
+- i mini-gruppi sono fatti per somiglianza di colore (8 gruppi, da 44 a 88 foto);
+- nella scheda la data è "—".
+Le parole per la voce sono vuote: quelle vecchie sono in versioni/parole-delle-vecchie-foto.js.
+Per tornare alle foto di prima: esegui strumenti\prepara-immagini.ps1 senza -Sorgente
+(rilegge Desktop\per cluade) e rimetti versioni/parole-delle-vecchie-foto.js come parole.js.

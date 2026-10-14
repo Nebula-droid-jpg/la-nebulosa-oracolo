@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aggiungi una foto alla Nebulosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #080a0d; --ink: #eee8df; --ink-2: #c8c1b8; --muted: #8d867f;
+    --gold: #dbab72; --gold-hi: #f3c58b; --gold-ink: #14090f; --line: rgba(236, 226, 211, .16); --err: #ffb4aa;
+    --serif: "Playfair Display", Georgia, serif; --sans: Manrope, system-ui, sans-serif; --mono: "DM Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { min-height: 100%; }
+  body {
+    background: radial-gradient(ellipse 80% 50% at 50% 30%, rgba(70, 40, 28, .45), transparent 70%), var(--bg);
+    color: var(--ink); font-family: var(--sans);
+    padding: calc(28px + env(safe-area-inset-top, 0px)) 20px calc(28px + env(safe-area-inset-bottom, 0px));
+    display: grid; place-items: start center;
+  }
+  main { width: min(440px, 100%); display: grid; gap: 22px; text-align: center; }
+  .eyebrow { font: 500 10px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  h1 { font: 500 15px/1.3 var(--mono); letter-spacing: .24em; margin-top: 8px; }
+  h2 { font: italic 500 30px/1.15 var(--serif); color: var(--gold-hi); }
+  p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+  .scegli {
+    display: grid; place-items: center; gap: 10px; padding: 34px 20px; cursor: pointer;
+    border: 1px dashed rgba(219, 171, 114, .6); background: rgba(10, 10, 10, .5);
+    font: italic 500 20px/1.2 var(--serif); color: var(--ink);
+  }
+  .scegli svg { color: var(--gold-hi); }
+  .scegli small { font: 500 10px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  input[type=file] { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  #anteprima { display: block; max-width: 100%; max-height: 52vh; margin: 0 auto; box-shadow: 0 0 0 1px rgba(243, 197, 139, .5), 0 20px 60px rgba(0, 0, 0, .6); }
+  .bottone {
+    width: 100%; padding: 17px 20px; border: 0; cursor: pointer;
+    background: var(--gold); color: var(--gold-ink); font: 600 13px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+  }
+  .bottone:disabled { opacity: .5; cursor: default; }
+  .secondario { background: none; border: 1px solid var(--line); color: var(--ink-2); }
+  .barra { height: 3px; background: var(--line); overflow: hidden; }
+  .barra i { display: block; height: 100%; width: 0; background: var(--gold-hi); transition: width .2s; }
+  .stato { font: 500 11px/1.5 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); min-height: 1.5em; }
+  .stato.errore { color: var(--err); text-transform: none; letter-spacing: 0; font: 400 14px/1.5 var(--sans); }
+  .fatto h2 { font-size: 34px; }
+  [hidden] { display: none !important; }
+  button:focus-visible, label:focus-within { outline: 2px solid var(--gold-hi); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Archivio</p>
+    <h1>LA NEBULOSA</h1>
+  </header>
+
+  <section id="passo1">
+    <h2>Aggiungi una tua foto</h2>
+    <p style="margin-top:10px">La vedrai comparire grande sullo schermo, poi entrerà nella nebulosa e troverà le immagini che le somigliano.</p>
+  </section>
+
+  <label class="scegli" id="scegli">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+    Scatta o scegli una foto
+    <small>dalla fotocamera o dalla galleria</small>
+    <input type="file" id="file" accept="image/*">
+  </label>
+
+  <section id="passo2" hidden>
+    <img id="anteprima" alt="La foto scelta">
+    <div style="display:grid;gap:10px;margin-top:20px">
+      <button class="bottone" id="invia">Invia alla nebulosa</button>
+      <button class="bottone secondario" id="cambia">Scegli un'altra foto</button>
+    </div>
+  </section>
+
+  <div class="barra" id="barra" hidden><i id="progresso"></i></div>
+  <p class="stato" id="stato" role="status"></p>
+
+  <section class="fatto" id="fatto" hidden>
+    <h2>Fatto!</h2>
+    <p style="margin:10px 0 20px">Guarda lo schermo: la tua foto sta entrando nella nebulosa.</p>
+    <button class="bottone secondario" id="altra">Aggiungi un'altra foto</button>
+  </section>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+let foto = null, nome = '';
+const stato = (t, errore) => { $('#stato').textContent = t; $('#stato').classList.toggle('errore', !!errore); };
+
+// the photo is reduced on the phone (max 1600 px, JPEG) so it travels quickly over Wi-Fi
+async function riduci(file) {
+  let src;
+  try { src = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch (e) {
+    src = await new Promise((ok, ko) => { const im = new Image(); im.onload = () => ok(im); im.onerror = ko; im.src = URL.createObjectURL(file); });
+  }
+  const w = src.width || src.naturalWidth, h = src.height || src.naturalHeight, s = Math.min(1, 1600 / Math.max(w, h));
+  const c = document.createElement('canvas');
+  c.width = Math.round(w * s); c.height = Math.round(h * s);
+  c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+  return await new Promise(ok => c.toBlob(ok, 'image/jpeg', .86));
+}
+
+$('#file').addEventListener('change', async e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  nome = f.name || '';
+  stato('preparo la foto…');
+  try {
+    foto = await riduci(f);
+    $('#anteprima').src = URL.createObjectURL(foto);
+    $('#scegli').hidden = true; $('#passo1').hidden = true; $('#passo2').hidden = false; $('#fatto').hidden = true;
+    stato('');
+  } catch (err) {
+    stato('Non riesco ad aprire questa foto. Prova con un\'altra, o scattane una nuova.', true);
+  }
+  e.target.value = '';
+});
+
+$('#cambia').onclick = () => $('#file').click();
+
+$('#invia').onclick = () => {
+  if (!foto) return;
+  $('#invia').disabled = true; $('#cambia').disabled = true;
+  $('#barra').hidden = false; $('#progresso').style.width = '0';
+  stato('invio in corso…');
+  const x = new XMLHttpRequest();
+  x.open('POST', '/api/carica');
+  x.setRequestHeader('Content-Type', 'image/jpeg');
+  x.setRequestHeader('X-Nome', encodeURIComponent(nome));
+  x.upload.onprogress = e => { if (e.lengthComputable) $('#progresso').style.width = (e.loaded / e.total * 100) + '%'; };
+  x.onload = () => {
+    $('#invia').disabled = false; $('#cambia').disabled = false; $('#barra').hidden = true;
+    if (x.status === 200) {
+      $('#passo2').hidden = true; $('#fatto').hidden = false; stato('');
+    } else if (x.status === 413) stato('La foto è troppo grande. Prova con un\'altra.', true);
+    else stato('Il computer non ha accettato la foto. Riprova tra un momento.', true);
+  };
+  x.onerror = () => {
+    $('#invia').disabled = false; $('#cambia').disabled = false; $('#barra').hidden = true;
+    stato('Non riesco a raggiungere il computer della nebulosa. Controlla di essere sullo stesso Wi-Fi e riprova.', true);
+  };
+  x.send(foto);
+};
+
+$('#altra').onclick = () => {
+  foto = null;
+  $('#fatto').hidden = true; $('#scegli').hidden = false; $('#passo1').hidden = false;
+  $('#file').click();
+};
+</script>
+</body>
+</html>

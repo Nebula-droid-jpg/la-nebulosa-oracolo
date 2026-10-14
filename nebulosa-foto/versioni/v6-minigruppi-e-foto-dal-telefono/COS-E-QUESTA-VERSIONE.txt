@@ -1,0 +1,16 @@
+﻿VERSIONE 6 — 13 ottobre 2026
+- niente più meteo (né pioggia né temporale);
+- circa DIECI MINI-GRUPPI (le cartelle grandi sono divise in pezzi di scatti consecutivi),
+  ognuno con la sua casa nello spazio; ogni 2,5-5 secondi due gruppi vicini si scontrano,
+  fino a 3 scontri insieme, con lampo, scintille e i rumori dello scontro;
+- FOTO DAL TELEFONO: il server locale riceve le foto dai telefoni sullo stesso Wi-Fi tramite
+  codice QR (pulsante QR in alto; nell'installazione il QR è sempre in un angolo);
+  la foto appare grande 3 secondi, poi si rimpicciolisce, vaga e si unisce al gruppo con i
+  colori più simili, oppure crea un gruppo nuovo che vaga da solo;
+  le foto restano nella cartella "caricate" e ricompaiono alla riapertura;
+- CRONOLOGIA delle foto caricate (pulsante con le immagini in alto, o "cronologia" sotto il QR
+  nell'installazione) con "Mostra" ed "Elimina";
+- ANTEPRIMA grande della foto quando ci passi sopra con il cursore.
+
+Per tornare a questa versione: copia index.html, parole.js e carica.html di questa cartella
+nella cartella principale (nebulosa-foto), e i file di "strumenti" nella cartella strumenti.

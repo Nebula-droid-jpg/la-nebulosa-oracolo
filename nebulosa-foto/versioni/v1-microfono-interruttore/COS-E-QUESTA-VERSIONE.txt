@@ -1,0 +1,8 @@
+﻿VERSIONE 1 — 12 ottobre 2026
+Microfono come interruttore (tocco = acceso/spento), una sessione d'ascolto per parola,
+pausa del microfono mentre l'immagine è aperta, immagine aperta 5 secondi, ritorno alla
+nebulosa intera, melodia diversa per ogni parola.
+
+Per tornare a questa versione: copia index.html e parole.js di questa cartella
+nella cartella principale (nebulosa-foto), sostituendo quelli che ci sono.
+Le foto (medie/, dati.js) non cambiano tra le versioni e restano nella cartella principale.

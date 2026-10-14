@@ -1,0 +1,14 @@
+﻿VERSIONE 4 — 12 ottobre 2026
+Come la versione 3 (distorsione + gruppi che si scontrano), più il METEO:
+- dopo pochi secondi arriva un TEMPORALE (circa 30 s): cielo scuro e bluastro, pioggia portata
+  dal vento, fulmini ramificati che colpiscono le immagini (l'immagine colpita si gonfia e
+  manda scintille), la nebulosa si agita di più; suoni di pioggia, vento e tuoni;
+- poi esce il SOLE (circa 25 s): arcobaleno, sole che sale con raggi che girano, riflessi,
+  pulviscolo dorato, colori caldi; suoni: accordo caldo, campanelle, uccellini;
+- poi un minuto di calma e il ciclo ricomincia.
+Pulsante con la nuvola in alto (o tasto T) per far arrivare subito il temporale.
+&meteo=0 nell'indirizzo: niente temporali automatici (solo con il pulsante).
+Nella nebulosa normale i suoni si sentono con "Rumore di fondo" acceso; nell'installazione sempre.
+
+Per tornare a questa versione: copia index.html e parole.js di questa cartella
+nella cartella principale (nebulosa-foto), sostituendo quelli che ci sono.

@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aggiungi una foto alla Nebulosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #080a0d; --ink: #eee8df; --ink-2: #c8c1b8; --muted: #8d867f;
+    --gold: #dbab72; --gold-hi: #f3c58b; --gold-ink: #14090f; --line: rgba(236, 226, 211, .16); --err: #ffb4aa; --neon: #39ff14;
+    --serif: "Playfair Display", Georgia, serif; --sans: Manrope, system-ui, sans-serif; --mono: "DM Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { min-height: 100%; }
+  body {
+    background: radial-gradient(ellipse 80% 50% at 50% 30%, rgba(70, 40, 28, .45), transparent 70%), var(--bg);
+    color: var(--ink); font-family: var(--sans);
+    padding: calc(24px + env(safe-area-inset-top, 0px)) 20px calc(28px + env(safe-area-inset-bottom, 0px));
+    display: grid; place-items: start center;
+  }
+  main { width: min(440px, 100%); display: grid; gap: 20px; text-align: center; }
+  .eyebrow { font: 500 10px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  h1 { font: 500 15px/1.3 var(--mono); letter-spacing: .24em; margin-top: 8px; }
+  h2 { font: italic 500 30px/1.15 var(--serif); color: var(--gold-hi); }
+  p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+  .scelte { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .scelta {
+    display: grid; place-items: center; gap: 10px; padding: 26px 12px; cursor: pointer;
+    border: 1px solid rgba(219, 171, 114, .6); background: rgba(10, 10, 10, .55);
+    font: italic 500 20px/1.2 var(--serif); color: var(--ink);
+  }
+  .scelta svg { color: var(--gold-hi); }
+  .scelta small { font: 500 9.5px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-style: normal; }
+  .scelta:active { background: rgba(219, 171, 114, .12); }
+  input[type=file] { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  #anteprima { display: block; max-width: 100%; max-height: 50vh; margin: 0 auto; box-shadow: 0 0 0 1px rgba(243, 197, 139, .5), 0 20px 60px rgba(0, 0, 0, .6); }
+  .bottone {
+    width: 100%; padding: 17px 20px; border: 0; cursor: pointer;
+    background: var(--gold); color: var(--gold-ink); font: 600 13px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+  }
+  .bottone:disabled { opacity: .5; cursor: default; }
+  .secondario { background: none; border: 1px solid var(--line); color: var(--ink-2); }
+  .barra { height: 3px; background: var(--line); overflow: hidden; }
+  .barra i { display: block; height: 100%; width: 0; background: var(--gold-hi); transition: width .2s; }
+  .stato { font: 500 11px/1.5 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); min-height: 1.5em; }
+  .stato.errore { color: var(--err); text-transform: none; letter-spacing: 0; font: 400 14px/1.5 var(--sans); }
+  .fatto h2 { font-size: 34px; }
+  /* the nebula's collisions, heard on the phone */
+  .suono {
+    display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 16px; width: 100%;
+    border: 1px solid var(--line); border-radius: 999px; background: rgba(10, 10, 11, .6);
+    font: 500 10.5px/1.2 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); cursor: pointer;
+  }
+  .suono[aria-pressed="true"] { border-color: var(--neon); color: #c9ffb8; }
+  .suono .onda { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+  .suono[aria-pressed="true"] .onda { background: var(--neon); box-shadow: 0 0 10px var(--neon); }
+  body.colpo .suono { animation: colpo .6s ease-out; }
+  @keyframes colpo { 0% { box-shadow: 0 0 0 0 rgba(57, 255, 20, .7); } 100% { box-shadow: 0 0 0 26px rgba(57, 255, 20, 0); } }
+  [hidden] { display: none !important; }
+  button:focus-visible, label:focus-within { outline: 2px solid var(--gold-hi); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Archivio</p>
+    <h1>LA NEBULOSA</h1>
+  </header>
+
+  <button class="suono" id="suono" aria-pressed="false"><span class="onda"></span><span id="suono-txt">Senti gli scontri della nebulosa</span></button>
+
+  <section id="passo1">
+    <h2>Aggiungi una tua foto</h2>
+    <p style="margin-top:10px">La vedrai comparire grande sullo schermo, poi entrerà nella nebulosa, nel gruppo che le somiglia.</p>
+  </section>
+
+  <div class="scelte" id="scelte">
+    <label class="scelta">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+      Scatta
+      <small>con la fotocamera</small>
+      <input type="file" id="scatta" accept="image/*" capture="environment">
+    </label>
+    <label class="scelta">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="9" r="1.5"/></svg>
+      Carica
+      <small>dalla galleria</small>
+      <input type="file" id="carica" accept="image/*">
+    </label>
+  </div>
+
+  <section id="passo2" hidden>
+    <img id="anteprima" alt="La foto scelta">
+    <div style="display:grid;gap:10px;margin-top:20px">
+      <button class="bottone" id="invia">Invia alla nebulosa</button>
+      <button class="bottone secondario" id="cambia">Scegli un'altra foto</button>
+    </div>
+  </section>
+
+  <div class="barra" id="barra" hidden><i id="progresso"></i></div>
+  <p class="stato" id="stato" role="status"></p>
+
+  <section class="fatto" id="fatto" hidden>
+    <h2>Fatto!</h2>
+    <p style="margin:10px 0 20px">Guarda lo schermo: la tua foto sta entrando nella nebulosa.</p>
+    <button class="bottone secondario" id="altra">Aggiungi un'altra foto</button>
+  </section>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+let foto = null, nome = '';
+const stato = (t, errore) => { $('#stato').textContent = t; $('#stato').classList.toggle('errore', !!errore); };
+
+/* ---------- the gong of the collisions, played on the phone ---------- */
+// The nebula tells the computer every time two groups collide; this page asks every half second and
+// plays the same kind of impact, louder for violent collisions. Phones only allow sound after a tap,
+// so the first tap anywhere (or the button) switches it on.
+let ac = null, master = null, rev = null, suonoOn = false, seq = -1, polling = false;
+function initAudio() {
+  if (ac) return;
+  ac = new (window.AudioContext || window.webkitAudioContext)();
+  master = ac.createGain(); master.gain.value = .9;
+  const comp = ac.createDynamicsCompressor(); master.connect(comp).connect(ac.destination);
+  const len = ac.sampleRate * 3, ir = ac.createBuffer(2, len, ac.sampleRate);
+  for (let ch = 0; ch < 2; ch++) { const d = ir.getChannelData(ch); for (let k = 0; k < len; k++) d[k] = (Math.random() * 2 - 1) * Math.pow(1 - k / len, 2.6); }
+  rev = ac.createConvolver(); rev.buffer = ir;
+  const wet = ac.createGain(); wet.gain.value = .5; rev.connect(wet).connect(master);
+}
+function noise(sec) { const len = Math.max(1, ac.sampleRate * sec) | 0, b = ac.createBuffer(1, len, ac.sampleRate), d = b.getChannelData(0); for (let k = 0; k < len; k++) d[k] = Math.random() * 2 - 1; return b; }
+function gong(force) {
+  if (!ac) return;
+  const t = ac.currentTime + .02, V = .2 + force * 1.33;
+  const o = ac.createOscillator(), og = ac.createGain();
+  o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(34, t + .9);
+  og.gain.setValueAtTime(Math.min(.9, .55 * V), t); og.gain.exponentialRampToValueAtTime(.0001, t + 1.8);
+  o.connect(og); og.connect(master); og.connect(rev); o.start(t); o.stop(t + 1.9);
+  const n2 = ac.createBufferSource(), lp = ac.createBiquadFilter(), g2 = ac.createGain();
+  n2.buffer = noise(1.6); lp.type = 'lowpass'; lp.frequency.setValueAtTime(1600, t); lp.frequency.exponentialRampToValueAtTime(120, t + 1.4);
+  g2.gain.setValueAtTime(Math.min(.8, .4 * V), t); g2.gain.exponentialRampToValueAtTime(.0001, t + 1.5);
+  n2.connect(lp).connect(g2); g2.connect(master); g2.connect(rev); n2.start(t);
+  for (let k = 0; k < Math.round(2 + force * 8); k++) {
+    const f = 320 + Math.random() * 1300, m = ac.createOscillator(), mg = ac.createGain(), c = ac.createOscillator(), cg = ac.createGain();
+    c.frequency.value = f; m.frequency.value = f * (2.76 + Math.random());
+    mg.gain.setValueAtTime(f * 2, t); mg.gain.exponentialRampToValueAtTime(1, t + 2);
+    m.connect(mg).connect(c.frequency);
+    const st = t + Math.random() * .08;
+    cg.gain.setValueAtTime(0, st); cg.gain.linearRampToValueAtTime(.045, st + .005); cg.gain.exponentialRampToValueAtTime(.0001, st + 1.6 + Math.random() * 1.2);
+    c.connect(cg); cg.connect(master); cg.connect(rev);
+    c.start(st); m.start(st); c.stop(st + 3); m.stop(st + 3);
+  }
+  document.body.classList.remove('colpo'); void document.body.offsetWidth; document.body.classList.add('colpo');
+  if (navigator.vibrate && force > .7) navigator.vibrate(force > .9 ? [60, 40, 90] : 50);
+}
+async function ascolta() {
+  if (polling) return;
+  polling = true;
+  while (true) {
+    try {
+      const r = await fetch('/api/eventi?dopo=' + seq, { cache: 'no-store' });
+      if (r.ok) {
+        const d = await r.json();
+        if (seq >= 0 && suonoOn) d.eventi.forEach(ev => gong(ev.forza));
+        seq = d.seq;
+      }
+    } catch (e) {}
+    await new Promise(r => setTimeout(r, 500));
+  }
+}
+function accendiSuono() {
+  initAudio(); ac.resume();
+  suonoOn = true;
+  $('#suono').setAttribute('aria-pressed', 'true');
+  $('#suono-txt').textContent = 'Stai sentendo gli scontri · tocca per silenziare';
+  ascolta();
+}
+$('#suono').onclick = () => {
+  if (suonoOn) { suonoOn = false; $('#suono').setAttribute('aria-pressed', 'false'); $('#suono-txt').textContent = 'Senti gli scontri della nebulosa'; }
+  else accendiSuono();
+};
+// the first tap on the page switches the sound on too
+addEventListener('pointerdown', () => { if (!ac) accendiSuono(); }, { once: true });
+ascolta();
+
+/* ---------- the photo ---------- */
+// reduced on the phone (max 1600 px, JPEG) so it travels quickly over Wi-Fi
+async function riduci(file) {
+  let src;
+  try { src = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch (e) {
+    src = await new Promise((ok, ko) => { const im = new Image(); im.onload = () => ok(im); im.onerror = ko; im.src = URL.createObjectURL(file); });
+  }
+  const w = src.width || src.naturalWidth, h = src.height || src.naturalHeight, s = Math.min(1, 1600 / Math.max(w, h));
+  const c = document.createElement('canvas');
+  c.width = Math.round(w * s); c.height = Math.round(h * s);
+  c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+  return await new Promise(ok => c.toBlob(ok, 'image/jpeg', .86));
+}
+async function scelta(e) {
+  const f = e.target.files[0];
+  if (!f) return;
+  nome = f.name || '';
+  stato('preparo la foto…');
+  try {
+    foto = await riduci(f);
+    $('#anteprima').src = URL.createObjectURL(foto);
+    $('#scelte').hidden = true; $('#passo1').hidden = true; $('#passo2').hidden = false; $('#fatto').hidden = true;
+    stato('');
+  } catch (err) {
+    stato('Non riesco ad aprire questa foto. Prova con un\'altra, o scattane una nuova.', true);
+  }
+  e.target.value = '';
+}
+$('#scatta').addEventListener('change', scelta);
+$('#carica').addEventListener('change', scelta);
+$('#cambia').onclick = () => { foto = null; $('#passo2').hidden = true; $('#scelte').hidden = false; $('#passo1').hidden = false; };
+
+$('#invia').onclick = () => {
+  if (!foto) return;
+  $('#invia').disabled = true; $('#cambia').disabled = true;
+  $('#barra').hidden = false; $('#progresso').style.width = '0';
+  stato('invio in corso…');
+  const x = new XMLHttpRequest();
+  x.open('POST', '/api/carica');
+  x.setRequestHeader('Content-Type', 'image/jpeg');
+  x.setRequestHeader('X-Nome', encodeURIComponent(nome));
+  x.upload.onprogress = e => { if (e.lengthComputable) $('#progresso').style.width = (e.loaded / e.total * 100) + '%'; };
+  x.onload = () => {
+    $('#invia').disabled = false; $('#cambia').disabled = false; $('#barra').hidden = true;
+    if (x.status === 200) { $('#passo2').hidden = true; $('#fatto').hidden = false; stato(''); }
+    else if (x.status === 413) stato('La foto è troppo grande. Prova con un\'altra.', true);
+    else stato('Il computer non ha accettato la foto. Riprova tra un momento.', true);
+  };
+  x.onerror = () => {
+    $('#invia').disabled = false; $('#cambia').disabled = false; $('#barra').hidden = true;
+    stato('Non riesco a raggiungere il computer della nebulosa. Controlla di essere sullo stesso Wi-Fi e riprova.', true);
+  };
+  x.send(foto);
+};
+$('#altra').onclick = () => { foto = null; $('#fatto').hidden = true; $('#scelte').hidden = false; $('#passo1').hidden = false; };
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+﻿VERSIONE 12 — come la v11, con la misura del rumore in dB sopra il silenzio della stanza: taratura di 3 secondi all'accensione, soglie 'pacato' (8 dB) e 'forte' (20 dB) regolabili dal pannello di taratura (pulsante con i cursori accanto a 'Modalità rumore'), tasto 'Ritara la stanza'.

@@ -1,0 +1,15 @@
+﻿VERSIONE 3 — 12 ottobre 2026
+Come la versione 2 (distorsione), più i GRUPPI CHE NAVIGANO:
+- ogni costellazione (una per cartella) viaggia da sola su una sua rotta lenta e ruota su se stessa;
+- ogni 10 secondi due gruppi (a volte tre) accelerano uno verso l'altro e si scontrano:
+  lampo, onda d'urto, scintille nei loro colori e una scossa dello schermo;
+- per qualche secondo si mescolano vorticando uno dentro l'altro, poi si separano e
+  riprendono ognuno la sua rotta;
+- suoni: un soffio che sale mentre si avvicinano, un boato con frammenti metallici all'impatto,
+  un soffio che scende quando si separano.
+Nella nebulosa normale i suoni si sentono con "Rumore di fondo" acceso; nell'installazione sempre.
+Mentre qualcuno guarda un'immagine non partono scontri.
+Per fermare i gruppi: aggiungi &fermi all'indirizzo.
+
+Per tornare a questa versione: copia index.html e parole.js di questa cartella
+nella cartella principale (nebulosa-foto), sostituendo quelli che ci sono.
